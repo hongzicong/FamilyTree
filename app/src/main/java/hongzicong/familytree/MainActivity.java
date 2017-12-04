@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         initWidget();
 
         try {
-            mTreeListViewAdapter = new SimpleTreeAdapter<>(mTree, this, mDatas, 10);
+            mTreeListViewAdapter = new SimpleTreeAdapter<>(mTree, this, mPersonDatas, 10);
             mTree.setAdapter(mTreeListViewAdapter);
         } catch (IllegalAccessException e)
         {

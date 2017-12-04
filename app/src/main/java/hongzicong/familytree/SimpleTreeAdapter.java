@@ -28,8 +28,9 @@ public class SimpleTreeAdapter<T> extends TreeListViewAdapter<T> {
         if (convertView == null) {
             convertView = mLayoutInflater.inflate(R.layout.list_item, parent, false);
             viewHolder = new ViewHolder();
-            viewHolder.expandIcon = (ImageView) convertView.findViewById(R.id.id_treenode_icon);
-            viewHolder.label = (TextView) convertView.findViewById(R.id.id_treenode_label);
+            viewHolder.sex=(ImageView)convertView.findViewById(R.id.is_sex);
+            viewHolder.expandIcon = (ImageView) convertView.findViewById(R.id.is_expand);
+            viewHolder.label = (TextView) convertView.findViewById(R.id.name);
             convertView.setTag(viewHolder);
         }
         else {

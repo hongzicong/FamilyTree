@@ -11,24 +11,18 @@ public class TreeHelper {
 
     public static <T> List<Node> getSortedNodes(List<T> datas,int defaultExpandLevel) throws IllegalArgumentException,IllegalAccessException {
         List<Node> result = new ArrayList<Node>();
-        //将用户数据转化为List<Node>以及设置Node间关系
         List<Node> nodes = convetData2Node(datas);
-        //拿到根节点
         List<Node> rootNodes = getRootNodes(nodes);
-        //排序
-        for (Node node : rootNodes)
-        {
+        for (Node node : rootNodes) {
             addNode(result, node, defaultExpandLevel, 1);
         }
         return result;
     }
 
-    public static List<Node> filterVisibleNode(List<Node> nodes)
-    {
+    public static List<Node> filterVisibleNode(List<Node> nodes) {
         List<Node> result = new ArrayList<Node>();
 
-        for (Node node : nodes)
-        {
+        for (Node node : nodes) {
             // 如果为跟节点，或者上层目录为展开状态
             if (node.isRoot() || node.isParentExpand())
             {
@@ -39,9 +33,7 @@ public class TreeHelper {
         return result;
     }
 
-    private static <T> List<Node> convetData2Node(List<T> datas) throws IllegalArgumentException, IllegalAccessException
-
-    {
+    private static <T> List<Node> convetData2Node(List<T> datas) throws IllegalArgumentException, IllegalAccessException {
         List<Node> nodes = new ArrayList<Node>();
         Node node = null;
 
@@ -77,9 +69,6 @@ public class TreeHelper {
             nodes.add(node);
         }
 
-        /**
-         * 设置Node间，父子关系;让每两个节点都比较一次，即可设置其中的关系
-         */
         for (int i = 0; i < nodes.size(); i++)
         {
             Node n = nodes.get(i);
