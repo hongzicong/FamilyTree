@@ -9,7 +9,7 @@ import java.util.List;
 
 public class TreeHelper {
 
-    public static <T> List<Node> getSortedNodes(List<T> datas,int defaultExpandLevel) throws IllegalArgumentException,IllegalAccessException {
+    public static List<Node> getSortedNodes(List<PersonData> datas,int defaultExpandLevel) throws IllegalArgumentException,IllegalAccessException {
         List<Node> result = new ArrayList<Node>();
         List<Node> nodes = convetDataToNode(datas);
         List<Node> rootNodes = getRootNodes(nodes);
@@ -31,12 +31,13 @@ public class TreeHelper {
         return result;
     }
 
-    private static <T> List<Node> convetDataToNode(List<T> datas) throws IllegalArgumentException, IllegalAccessException {
+    private static List<Node> convetDataToNode(List<PersonData> datas) throws IllegalArgumentException, IllegalAccessException {
         List<Node> nodes = new ArrayList<Node>();
         Node node = null;
 
-        for (T t : datas) {
-
+        for (PersonData p : datas) {
+            node=new Node(p.getName(),p.getIsMale(),p.getId(),p.getParentId());
+            nodes.add(node);
         }
 
         for (int i = 0; i < nodes.size(); i++) {

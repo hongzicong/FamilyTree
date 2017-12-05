@@ -9,13 +9,23 @@ public class PersonData {
     private String mName;
     private int mId;
     private int parentId;
-    private int sex;
+    private boolean isMale;
+    private int picture;
 
-    public PersonData(int mId,int parentId,String mName,int sex){
+    public PersonData(int mId,int parentId,String mName,int picture,boolean isMale){
         this.mId=mId;
         this.parentId=parentId;
         this.mName=mName;
-        this.sex=sex;
+        this.isMale=isMale;
+        this.picture=picture;
+    }
+
+    public int getPicture(){
+        return picture;
+    }
+
+    public void setPicture(int picture){
+        this.picture=picture;
     }
 
     public int getId(){
@@ -26,8 +36,12 @@ public class PersonData {
         return parentId;
     }
 
-    public int getSex(){
-        return sex;
+    public boolean getIsMale(){
+        return isMale;
+    }
+
+    public String getName(){
+        return this.mName;
     }
 
     public void setId(int id){

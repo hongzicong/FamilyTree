@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         initWidget();
 
         try {
-            mTreeListViewAdapter = new SimpleTreeAdapter<>(mTree, this, mPersonDatas, 10);
+            mTreeListViewAdapter = new SimpleTreeAdapter(mTree, this, mPersonDatas, 10);
             mTree.setAdapter(mTreeListViewAdapter);
         } catch (IllegalAccessException e)
         {
@@ -37,6 +37,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initData(){
+        PersonData p=new PersonData(1,0,"洪梓聪",R.drawable.picture,true);
+        mPersonDatas.add(p);
+        p=new PersonData(2,1,"洪小聪",R.drawable.picture,true);
+        mPersonDatas.add(p);
         //todo get from database
     }
 

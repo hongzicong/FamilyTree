@@ -17,8 +17,9 @@ public class Node {
     private Node mFather;
 
     private int expandIcon;
-    private int sexIcon;
+    private boolean isMale;
 
+    private int picture;
     private String name;
     private boolean expand=false;
 
@@ -28,6 +29,13 @@ public class Node {
 
     public Node(String name){
         this.name=name;
+    }
+
+    public Node(String name,boolean isMale,int id,int fatherId){
+        this.name=name;
+        this.fatherId=fatherId;
+        this.id=id;
+        this.isMale=isMale;
     }
 
     public String getName(){
@@ -65,8 +73,12 @@ public class Node {
         return expandIcon;
     }
 
-    public void setSexIcon(int icon){
-        this.sexIcon=icon;
+    public void setIsMale(boolean isMale){
+        this.isMale=isMale;
+    }
+
+    public boolean getIsMale(){
+        return this.isMale;
     }
 
     public void setExpand(boolean isExpand){
@@ -104,6 +116,14 @@ public class Node {
 
     public void setFather(Node father){
         this.mFather=father;
+    }
+
+    public void setPicture(int picture){
+        this.picture=picture;
+    }
+
+    public int getPicture(){
+        return picture;
     }
 
 }

@@ -14,7 +14,7 @@ import java.util.List;
  * Created by DELL-PC on 2017/12/4.
  */
 
-public abstract class TreeListViewAdapter<T> extends BaseAdapter {
+public abstract class TreeListViewAdapter extends BaseAdapter {
 
     protected Context mContext;
     //All can see node
@@ -33,7 +33,7 @@ public abstract class TreeListViewAdapter<T> extends BaseAdapter {
         this.onTreeNodeClickListener = onTreeNodeClickListener;
     }
 
-    public TreeListViewAdapter(ListView mTree, Context context, List<T> datas, int defaultExpandLevel) throws IllegalArgumentException, IllegalAccessException {
+    public TreeListViewAdapter(ListView mTree, Context context, List<PersonData> datas, int defaultExpandLevel) throws IllegalArgumentException, IllegalAccessException {
         mContext = context;
         mAllNodes = TreeHelper.getSortedNodes(datas, defaultExpandLevel);
         mNodeList = TreeHelper.filterVisibleNode(mAllNodes);
