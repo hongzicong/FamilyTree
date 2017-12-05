@@ -37,8 +37,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initData(){
-
+        //todo get from database
     }
-
 
 }
