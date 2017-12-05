@@ -1,7 +1,9 @@
 package hongzicong.familytree;
 
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.WindowManager;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -17,7 +19,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        super.setContentView(R.layout.activity_main);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            WindowManager.LayoutParams localLayoutParams = getWindow().getAttributes();
+            localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
+        }
 
         initData();
         initWidget();
@@ -25,6 +32,13 @@ public class MainActivity extends AppCompatActivity {
         try {
             mTreeListViewAdapter = new SimpleTreeAdapter(mTree, this, mPersonDatas, 10);
             mTree.setAdapter(mTreeListViewAdapter);
+            mTreeListViewAdapter.setOnChangeSexClickListener(new SimpleTreeAdapter.OnChangeSexClickListener(){
+                @Override
+                public void onClick(Node node, int position) {
+                    node.setIsMale(!node.getIsMale());
+                    mTreeListViewAdapter.notifyDataSetChanged();
+                }
+            });
         } catch (IllegalAccessException e)
         {
             e.printStackTrace();
@@ -37,11 +51,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initData(){
-        PersonData p=new PersonData(1,0,"路明非爸爸",R.drawable.picture,true);
+        PersonData p=new PersonData(1,0,"A",R.drawable.picture,true);
         mPersonDatas.add(p);
-        p=new PersonData(2,1,"路明非",R.drawable.picture,true);
+        p=new PersonData(2,1,"B",R.drawable.picture,true);
         mPersonDatas.add(p);
-        p=new PersonData(3,1,"路鸣泽",R.drawable.picture,true);
+        p=new PersonData(3,1,"C",R.drawable.picture,true);
+        mPersonDatas.add(p);
+        p=new PersonData(4,2,"D",R.drawable.picture,true);
         mPersonDatas.add(p);
         //todo get from database
     }

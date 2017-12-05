@@ -1,7 +1,6 @@
 package hongzicong.familytree;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -57,10 +56,4 @@ public class SimpleTreeAdapter extends TreeListViewAdapter {
         return convertView;
     }
 
-    private final class ViewHolder {
-        ImageView expandIcon;
-        TextView label;
-        ImageView sex;
-        ImageView picture;
-    }
 }

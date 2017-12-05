@@ -37,6 +37,7 @@ public class TreeHelper {
 
         for (PersonData p : datas) {
             node=new Node(p.getName(),p.getIsMale(),p.getId(),p.getParentId());
+            node.setPicture(p.getPicture());
             nodes.add(node);
         }
 
@@ -93,5 +94,7 @@ public class TreeHelper {
             node.setExpandIcon(-1);
         }
     }
+
+
 
 }

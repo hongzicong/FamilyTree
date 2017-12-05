@@ -20,7 +20,8 @@ public class FamilyTreeDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-
+        String sql = "create table if not exists " + TABLE_NAME + " (Id integer primary key, CustomName text, OrderPrice integer, Country text)";
+        db.execSQL(sql);
     }
 
     @Override
