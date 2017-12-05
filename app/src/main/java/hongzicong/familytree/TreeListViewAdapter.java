@@ -5,6 +5,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -27,12 +29,22 @@ public abstract class TreeListViewAdapter extends BaseAdapter {
     //All node
     protected List<Node> mAllNodes;
 
+    private Animation mAnimation;
+
     private OnTreeNodeClickListener onTreeNodeClickListener;
     private OnChangeSexClickListener mOnChangeSexClickListener;
     private OnExpandClickListener mOnExpandClickListener;
 
+    public OnExpandClickListener getOnExpandClickListener(){
+        return this.mOnExpandClickListener;
+    }
+
+    public List<Node> getNodeList(){
+        return this.mNodeList;
+    }
+
     public interface OnExpandClickListener{
-        void onClick(Node node,int position);
+        void onClick(int position);
     }
 
     public void setOnExpandClickListner(OnExpandClickListener onExpandClickListner){
@@ -60,17 +72,7 @@ public abstract class TreeListViewAdapter extends BaseAdapter {
         mAllNodes = TreeHelper.getSortedNodes(datas, defaultExpandLevel);
         mNodeList = TreeHelper.filterVisibleNode(mAllNodes);
         mLayoutInflater = LayoutInflater.from(context);
-
-        mTree.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
-                expandOrCollapse(position);
-                if (onTreeNodeClickListener != null) {
-                    onTreeNodeClickListener.onClick(mNodeList.get(position),position);
-                }
-            }
-        });
-
+        mAnimation= AnimationUtils.loadAnimation(mContext, R.anim.list_anim);
     }
 
     public void expandOrCollapse(int position) {
@@ -123,8 +125,19 @@ public abstract class TreeListViewAdapter extends BaseAdapter {
             }
         });
 
+        viewHolder.expandIcon.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                mOnExpandClickListener.onClick(position);
+            }
+        });
+
 
         Node node = mNodeList.get(position);
+        if(node.getIsAnimate()){
+            convertView.startAnimation(mAnimation);
+            node.setIsAnimate(false);
+        }
         convertView = getConvertView(node, position, convertView, parent);
         convertView.setPadding(node.getLevel() * 50, 3, 3, 3);
         return convertView;

@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +40,12 @@ public class MainActivity extends AppCompatActivity {
                     mTreeListViewAdapter.notifyDataSetChanged();
                 }
             });
+            mTreeListViewAdapter.setOnExpandClickListner(new SimpleTreeAdapter.OnExpandClickListener(){
+                @Override
+                public void onClick(int position) {
+                    mTreeListViewAdapter.expandOrCollapse(position);
+                }
+            });
         } catch (IllegalAccessException e)
         {
             e.printStackTrace();
@@ -58,6 +65,16 @@ public class MainActivity extends AppCompatActivity {
         p=new PersonData(3,1,"C",R.drawable.picture,true);
         mPersonDatas.add(p);
         p=new PersonData(4,2,"D",R.drawable.picture,true);
+        mPersonDatas.add(p);
+        p=new PersonData(5,4,"E",R.drawable.picture,true);
+        mPersonDatas.add(p);
+        p=new PersonData(6,5,"F",R.drawable.picture,true);
+        mPersonDatas.add(p);
+        p=new PersonData(7,4,"G",R.drawable.picture,true);
+        mPersonDatas.add(p);
+        p=new PersonData(8,1,"H",R.drawable.picture,true);
+        mPersonDatas.add(p);
+        p=new PersonData(9,2,"I",R.drawable.picture,true);
         mPersonDatas.add(p);
         //todo get from database
     }

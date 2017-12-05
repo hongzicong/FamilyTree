@@ -22,6 +22,7 @@ public class Node {
     private int picture;
     private String name;
     private boolean expand=false;
+    private boolean isAnimate=false;
 
     public Node(){
 
@@ -65,6 +66,17 @@ public class Node {
         return true;
     }
 
+    public void setIsAnimate(boolean isAnimate){
+        for(Node node:mChildList){
+            node.setIsAnimate(true);
+        }
+        this.isAnimate=isAnimate;
+    }
+
+    public boolean getIsAnimate(){
+        return this.isAnimate;
+    }
+
     public void setExpandIcon(int icon){
         this.expandIcon=icon;
     }
@@ -85,6 +97,7 @@ public class Node {
         this.expand=isExpand;
         if(!isExpand){
             for(Node node:mChildList){
+                node.setIsAnimate(true);
                 node.setExpand(isExpand);
             }
         }
