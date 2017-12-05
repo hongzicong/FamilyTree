@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -15,17 +15,19 @@
     <TextView
         android:id="@+id/name"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:text="路明非"/>
 
     <ImageView
         android:id="@+id/is_sex"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/picture"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:civ_border_width="2dp"
+        app:civ_border_color="000000"/>
 
-
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>
