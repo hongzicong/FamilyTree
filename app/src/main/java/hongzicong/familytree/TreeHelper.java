@@ -11,14 +11,18 @@ public class TreeHelper {
 
     public static List<Node> getSortedNodes(List<PersonData> datas,int defaultExpandLevel) throws IllegalArgumentException,IllegalAccessException {
         List<Node> result = new ArrayList<Node>();
+        //单纯的node
         List<Node> nodes = convetDataToNode(datas);
+        //所有是root的node集合
         List<Node> rootNodes = getRootNodes(nodes);
+        //从root开始将所有的node加入进去result中，并将是否打开的信息加入进去
         for (Node node : rootNodes) {
             addNode(result, node, defaultExpandLevel, 1);
         }
         return result;
     }
 
+    //所有可见的node
     public static List<Node> filterVisibleNode(List<Node> nodes) {
         List<Node> result = new ArrayList<Node>();
 
@@ -31,15 +35,20 @@ public class TreeHelper {
         return result;
     }
 
+    public static Node convertADataToANode(PersonData p){
+        Node node=new Node(p.getName(),p.getIsMale(),p.getId(),p.getParentId());
+        node.setPicture(p.getPicture());
+        node.setAge(p.getAge());
+        return node;
+    }
+
+    //生成单纯的list，但是所有的node加了child了
     private static List<Node> convetDataToNode(List<PersonData> datas) throws IllegalArgumentException, IllegalAccessException {
         List<Node> nodes = new ArrayList<Node>();
         Node node = null;
 
         for (PersonData p : datas) {
-            node=new Node(p.getName(),p.getIsMale(),p.getId(),p.getParentId());
-            node.setPicture(p.getPicture());
-            node.setAge(p.getAge());
-            nodes.add(node);
+            nodes.add(convertADataToANode(p));
         }
 
         for (int i = 0; i < nodes.size(); i++) {

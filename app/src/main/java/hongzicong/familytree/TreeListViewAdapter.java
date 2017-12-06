@@ -28,6 +28,7 @@ public abstract class TreeListViewAdapter extends BaseAdapter {
     protected Context mContext;
     //All can see node
     protected List<Node> mNodeList;
+    protected List<PersonData> allPersonDatas;
     protected LayoutInflater mLayoutInflater;
     //All node
     protected List<Node> mAllNodes;
@@ -69,7 +70,7 @@ public abstract class TreeListViewAdapter extends BaseAdapter {
     }
 
     public interface OnAddChildClickListener{
-        void onClick(Node node,int position);
+        void onClick(Node node,List<Node> allList);
     }
 
     public void setOnAddChildClickListener(OnAddChildClickListener onAddChildClickListener){
@@ -77,7 +78,7 @@ public abstract class TreeListViewAdapter extends BaseAdapter {
     }
 
     public interface OnAddPartnerClickListener{
-        void onClick(Node node,int position);
+        void onClick(Node node,List<Node> allList);
     }
 
     public void setOnAddPartnerClickListener(OnAddPartnerClickListener onAddPartnerClickListener){
@@ -110,6 +111,7 @@ public abstract class TreeListViewAdapter extends BaseAdapter {
 
     public TreeListViewAdapter(ListView mTree, Context context, List<PersonData> datas, int defaultExpandLevel) throws IllegalArgumentException, IllegalAccessException {
         mContext = context;
+        allPersonDatas=datas;
         mAllNodes = TreeHelper.getSortedNodes(datas, defaultExpandLevel);
         mNodeList = TreeHelper.filterVisibleNode(mAllNodes);
         mLayoutInflater = LayoutInflater.from(context);
@@ -184,7 +186,7 @@ public abstract class TreeListViewAdapter extends BaseAdapter {
         viewHolder.addPartnerText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mOnAddPartnerClickListener.onClick(getItem(position),position);
+                mOnAddPartnerClickListener.onClick(getItem(position),mAllNodes);
             }
         });
 
@@ -205,11 +207,10 @@ public abstract class TreeListViewAdapter extends BaseAdapter {
         viewHolder.addSonText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                mOnAddChildClickListener.onClick(getItem(position),position);
+                mOnAddChildClickListener.onClick(getItem(position),mAllNodes);
+                mNodeList=TreeHelper.filterVisibleNode(mAllNodes);
             }
         });
-
 
         Node node = mNodeList.get(position);
         if(node.getIsAnimate()){

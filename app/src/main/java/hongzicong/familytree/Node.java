@@ -108,10 +108,6 @@ public class Node {
         }
     }
 
-    public void setLevel(int level){
-        this.mLevel=level;
-    }
-
     public int getLevel(){
         return (mFather==null)?0:mFather.getLevel()+1;
     }

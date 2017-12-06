@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private TreeListViewAdapter mTreeListViewAdapter;
     private Toolbar toolBar;
     private SearchView mSearchView;
+    private int newId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,13 +73,21 @@ public class MainActivity extends AppCompatActivity {
         });
         mTreeListViewAdapter.setOnAddChildClickListener(new SimpleTreeAdapter.OnAddChildClickListener(){
             @Override
-            public void onClick(Node node, int position) {
-                Toast.makeText(MainActivity.this,"Hello,world",Toast.LENGTH_LONG).show();
+            public void onClick(Node node, List<Node> allNodes) {
+                PersonData p=new PersonData(newId++,node.getId(),"无名氏",R.drawable.picture,true,1);
+                mPersonDatas.add(p);
+                Node newNode=TreeHelper.convertADataToANode(p);
+                newNode.setFather(node);
+                node.getChildList().add(newNode);
+                node.setExpand(false);
+                allNodes.add(newNode);
+                mTreeListViewAdapter.notifyDataSetChanged();
             }
         });
         mTreeListViewAdapter.setOnAddPartnerClickListener(new SimpleTreeAdapter.OnAddPartnerClickListener() {
             @Override
-            public void onClick(Node node,int position) {
+            public void onClick(Node node,List<Node> allNodes) {
+                //todo
                 Toast.makeText(MainActivity.this,"Hello,world",Toast.LENGTH_LONG).show();
             }
         });
@@ -139,6 +148,7 @@ public class MainActivity extends AppCompatActivity {
         mPersonDatas.add(p);
         p=new PersonData(10,5,"贾迎春",R.drawable.picture,true,19);
         mPersonDatas.add(p);
+        newId=11;
         //todo get from database
     }
 
