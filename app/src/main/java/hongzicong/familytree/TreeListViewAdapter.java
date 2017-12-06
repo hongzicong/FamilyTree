@@ -1,7 +1,10 @@
 package hongzicong.familytree;
 
 import android.content.Context;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,10 +33,16 @@ public abstract class TreeListViewAdapter extends BaseAdapter {
     protected List<Node> mAllNodes;
 
     private Animation mAnimation;
+    ColorMatrix cm;
+    ColorMatrixColorFilter grayColorFilter;
 
     private OnTreeNodeClickListener onTreeNodeClickListener;
     private OnChangeSexClickListener mOnChangeSexClickListener;
     private OnExpandClickListener mOnExpandClickListener;
+    private OnAddPartnerClickListener mOnAddPartnerClickListener;
+    private OnAddChildClickListener mOnAddChildClickListener;
+    private OnDieClickListener mOnDieClickListener;
+    private OnUnDieClickListener mOnUnDieClickListener;
 
     public OnExpandClickListener getOnExpandClickListener(){
         return this.mOnExpandClickListener;
@@ -41,6 +50,38 @@ public abstract class TreeListViewAdapter extends BaseAdapter {
 
     public List<Node> getNodeList(){
         return this.mNodeList;
+    }
+
+    public interface OnUnDieClickListener{
+        void onClick(Node node,int position);
+    }
+
+    public void setOnUnDieClickListener(OnUnDieClickListener onUnDieClickListener){
+        this.mOnUnDieClickListener=onUnDieClickListener;
+    }
+
+    public interface OnDieClickListener{
+        void onClick(Node node,int position);
+    }
+
+    public void setOnDieClickListener(OnDieClickListener onDieClickListener){
+        this.mOnDieClickListener=onDieClickListener;
+    }
+
+    public interface OnAddChildClickListener{
+        void onClick(Node node,int position);
+    }
+
+    public void setOnAddChildClickListener(OnAddChildClickListener onAddChildClickListener){
+        this.mOnAddChildClickListener=onAddChildClickListener;
+    }
+
+    public interface OnAddPartnerClickListener{
+        void onClick(Node node,int position);
+    }
+
+    public void setOnAddPartnerClickListener(OnAddPartnerClickListener onAddPartnerClickListener){
+        this.mOnAddPartnerClickListener=onAddPartnerClickListener;
     }
 
     public interface OnExpandClickListener{
@@ -73,6 +114,9 @@ public abstract class TreeListViewAdapter extends BaseAdapter {
         mNodeList = TreeHelper.filterVisibleNode(mAllNodes);
         mLayoutInflater = LayoutInflater.from(context);
         mAnimation= AnimationUtils.loadAnimation(mContext, R.anim.list_anim);
+        cm = new ColorMatrix();
+        cm.setSaturation(0);
+        grayColorFilter = new ColorMatrixColorFilter(cm);
     }
 
     public void expandOrCollapse(int position) {
@@ -112,6 +156,11 @@ public abstract class TreeListViewAdapter extends BaseAdapter {
             viewHolder.expandIcon = (ImageView) convertView.findViewById(R.id.is_expand);
             viewHolder.label = (TextView) convertView.findViewById(R.id.name);
             viewHolder.picture=(ImageView)convertView.findViewById(R.id.picture);
+            viewHolder.paddingText=(TextView)convertView.findViewById(R.id.padding_text);
+            viewHolder.addPartnerText=(TextView)convertView.findViewById(R.id.add_wife);
+            viewHolder.addSonText=(TextView)convertView.findViewById(R.id.add_son);
+            viewHolder.dieText=(TextView)convertView.findViewById(R.id.die);
+            viewHolder.undieText=(TextView)convertView.findViewById(R.id.undie);
             convertView.setTag(viewHolder);
         }
         else {
@@ -132,6 +181,35 @@ public abstract class TreeListViewAdapter extends BaseAdapter {
             }
         });
 
+        viewHolder.addPartnerText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mOnAddPartnerClickListener.onClick(getItem(position),position);
+            }
+        });
+
+        viewHolder.dieText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mOnDieClickListener.onClick(getItem(position),position);
+            }
+        });
+
+        viewHolder.undieText.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                mOnUnDieClickListener.onClick(getItem(position),position);
+            }
+        });
+
+        viewHolder.addSonText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                mOnAddChildClickListener.onClick(getItem(position),position);
+            }
+        });
+
 
         Node node = mNodeList.get(position);
         if(node.getIsAnimate()){
@@ -139,7 +217,35 @@ public abstract class TreeListViewAdapter extends BaseAdapter {
             node.setIsAnimate(false);
         }
         convertView = getConvertView(node, position, convertView, parent);
-        convertView.setPadding(node.getLevel() * 50, 3, 3, 3);
+        StringBuffer paddingString=new StringBuffer();
+        for(int i=0;i<node.getLevel();++i){
+            paddingString.append("   ");
+        }
+        viewHolder.paddingText.setText(paddingString);
+
+        if(node.isDie()){
+            //todo new picture
+            Log.d("HAHA","die");
+            viewHolder.picture.setImageResource(R.drawable.dead_picture);
+            if(node.getIsMale()){
+                viewHolder.sex.setImageResource(R.drawable.dead_male_icon);
+            }
+            else{
+                viewHolder.sex.setImageResource(R.drawable.dead_female_icon);
+            }
+        }
+        else{
+            //todo new picture
+            Log.d("HAHA","undie");
+            viewHolder.picture.setImageResource(R.drawable.picture);
+            if(node.getIsMale()){
+                viewHolder.sex.setImageResource(R.drawable.male_icon);
+            }
+            else{
+                viewHolder.sex.setImageResource(R.drawable.female_icon);
+            }
+        }
+
         return convertView;
     }
 
@@ -150,6 +256,11 @@ public abstract class TreeListViewAdapter extends BaseAdapter {
         TextView label;
         ImageView sex;
         ImageView picture;
+        TextView paddingText;
+        TextView addPartnerText;
+        TextView addSonText;
+        TextView dieText;
+        TextView undieText;
     }
 
 }

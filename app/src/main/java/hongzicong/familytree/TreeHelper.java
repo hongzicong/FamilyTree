@@ -38,6 +38,7 @@ public class TreeHelper {
         for (PersonData p : datas) {
             node=new Node(p.getName(),p.getIsMale(),p.getId(),p.getParentId());
             node.setPicture(p.getPicture());
+            node.setAge(p.getAge());
             nodes.add(node);
         }
 

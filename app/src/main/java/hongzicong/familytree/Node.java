@@ -15,6 +15,7 @@ public class Node {
     private int mLevel;
     private List<Node> mChildList=new ArrayList<>();
     private Node mFather;
+    private int mAge;
 
     private int expandIcon;
     private boolean isMale;
@@ -64,6 +65,10 @@ public class Node {
             return mFather.isExpand();
         }
         return true;
+    }
+
+    public boolean isDie(){
+        return mAge==-1;
     }
 
     public void setIsAnimate(boolean isAnimate){
@@ -139,4 +144,11 @@ public class Node {
         return picture;
     }
 
+    public int getAge(){
+        return mAge;
+    }
+
+    public void setAge(int age){
+        this.mAge=age;
+    }
 }

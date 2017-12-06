@@ -11,13 +11,15 @@ public class PersonData {
     private int parentId;
     private boolean isMale;
     private int picture;
+    private int mAge;
 
-    public PersonData(int mId,int parentId,String mName,int picture,boolean isMale){
+    public PersonData(int mId,int parentId,String mName,int picture,boolean isMale,int age){
         this.mId=mId;
         this.parentId=parentId;
         this.mName=mName;
         this.isMale=isMale;
         this.picture=picture;
+        this.mAge=age;
     }
 
     public int getPicture(){
@@ -52,4 +54,11 @@ public class PersonData {
         this.parentId=id;
     }
 
+    public void setAge(int age){
+        this.mAge=age;
+    }
+
+    public int getAge(){
+        return mAge;
+    }
 }

@@ -29,6 +29,11 @@ public class SimpleTreeAdapter extends TreeListViewAdapter {
             viewHolder.expandIcon = (ImageView) convertView.findViewById(R.id.is_expand);
             viewHolder.label = (TextView) convertView.findViewById(R.id.name);
             viewHolder.picture=(ImageView)convertView.findViewById(R.id.picture);
+            viewHolder.paddingText=(TextView)convertView.findViewById(R.id.padding_text);
+            viewHolder.addPartnerText=(TextView)convertView.findViewById(R.id.add_wife);
+            viewHolder.addSonText=(TextView)convertView.findViewById(R.id.add_son);
+            viewHolder.dieText=(TextView)convertView.findViewById(R.id.die);
+
             convertView.setTag(viewHolder);
         }
         else {
