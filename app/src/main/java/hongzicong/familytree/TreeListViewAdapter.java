@@ -1,6 +1,7 @@
 package hongzicong.familytree;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.support.v7.widget.RecyclerView;
@@ -119,6 +120,7 @@ public abstract class TreeListViewAdapter extends BaseAdapter {
         cm = new ColorMatrix();
         cm.setSaturation(0);
         grayColorFilter = new ColorMatrixColorFilter(cm);
+
     }
 
     public void expandOrCollapse(int position) {

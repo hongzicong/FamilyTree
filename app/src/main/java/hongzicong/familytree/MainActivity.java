@@ -1,5 +1,6 @@
 package hongzicong.familytree;
 
+import android.content.Intent;
 import android.os.Build;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
@@ -9,7 +10,9 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -96,6 +99,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(Node node, int position) {
                 node.setAge(1);
                 mTreeListViewAdapter.notifyDataSetChanged();
+            }
+        });
+        mTree.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent=new Intent(MainActivity.this,EditData.class);
+                startActivity(intent);
             }
         });
     }
