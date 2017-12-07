@@ -34,9 +34,9 @@ public abstract class TreeListViewAdapter extends BaseAdapter {
     //All node
     protected List<Node> mAllNodes;
 
+    protected int level;
+
     private Animation mAnimation;
-    ColorMatrix cm;
-    ColorMatrixColorFilter grayColorFilter;
 
     private OnTreeNodeClickListener onTreeNodeClickListener;
     private OnChangeSexClickListener mOnChangeSexClickListener;
@@ -117,10 +117,7 @@ public abstract class TreeListViewAdapter extends BaseAdapter {
         mNodeList = TreeHelper.filterVisibleNode(mAllNodes);
         mLayoutInflater = LayoutInflater.from(context);
         mAnimation= AnimationUtils.loadAnimation(mContext, R.anim.list_anim);
-        cm = new ColorMatrix();
-        cm.setSaturation(0);
-        grayColorFilter = new ColorMatrixColorFilter(cm);
-
+        level=defaultExpandLevel;
     }
 
     public void expandOrCollapse(int position) {
@@ -214,33 +211,38 @@ public abstract class TreeListViewAdapter extends BaseAdapter {
             }
         });
 
+        //每一次新出现都要有动画
         Node node = mNodeList.get(position);
         if(node.getIsAnimate()){
             convertView.startAnimation(mAnimation);
             node.setIsAnimate(false);
         }
+
+        //得到保存的图片
         convertView = getConvertView(node, position, convertView, parent);
+
+        //缩进
         StringBuffer paddingString=new StringBuffer();
         for(int i=0;i<node.getLevel();++i){
             paddingString.append("   ");
         }
         viewHolder.paddingText.setText(paddingString);
 
+        //处理是否死去
         if(node.isDie()){
             //todo new picture
-            Log.d("HAHA","die");
-            viewHolder.picture.setImageResource(R.drawable.dead_picture);
+            viewHolder.picture.setImageResource(node.getPicture());
             if(node.getIsMale()){
                 viewHolder.sex.setImageResource(R.drawable.dead_male_icon);
             }
+
             else{
                 viewHolder.sex.setImageResource(R.drawable.dead_female_icon);
             }
         }
         else{
             //todo new picture
-            Log.d("HAHA","undie");
-            viewHolder.picture.setImageResource(R.drawable.picture);
+            viewHolder.picture.setImageResource(node.getPicture());
             if(node.getIsMale()){
                 viewHolder.sex.setImageResource(R.drawable.male_icon);
             }

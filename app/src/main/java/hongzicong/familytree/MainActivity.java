@@ -78,12 +78,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(Node node, List<Node> allNodes) {
                 PersonData p=new PersonData(newId++,node.getId(),"无名氏",R.drawable.picture,true,1);
-                mPersonDatas.add(p);
                 Node newNode=TreeHelper.convertADataToANode(p);
                 newNode.setFather(node);
                 node.getChildList().add(newNode);
                 node.setExpand(false);
                 allNodes.add(newNode);
+                TreeHelper.sortNodesInPlace(allNodes,3);
                 mTreeListViewAdapter.notifyDataSetChanged();
             }
         });
@@ -106,7 +106,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent=new Intent(MainActivity.this,EditData.class);
-                startActivity(intent);
+                /*intent.putExtra("member_name",);
+                intent.putExtra("member_age",);
+                intent.putExtra("member_picture",);*/
+                startActivityForResult(intent,1);
             }
         });
     }
@@ -136,30 +139,34 @@ public class MainActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //todo
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
     private void initData(){
-        PersonData p=new PersonData(11,0,"贾演",R.drawable.picture,true,-1);
+        PersonData p=new PersonData(11,0,"贾演",R.drawable.picture_a,true,-1);
         mPersonDatas.add(p);
-        p=new PersonData(1,0,"贾源",R.drawable.picture,true,-1);
+        p=new PersonData(1,0,"贾源",R.drawable.picture_b,true,-1);
         mPersonDatas.add(p);
-        p=new PersonData(2,1,"贾代善",R.drawable.picture,true,43);
+        p=new PersonData(2,1,"贾代善",R.drawable.picture_c,true,43);
         mPersonDatas.add(p);
-        p=new PersonData(3,2,"贾政",R.drawable.picture,true,43);
+        p=new PersonData(3,2,"贾政",R.drawable.picture_d,true,43);
         mPersonDatas.add(p);
-        p=new PersonData(4,2,"贾敏",R.drawable.picture,true,56);
+        p=new PersonData(4,2,"贾敏",R.drawable.picture_e,true,56);
         mPersonDatas.add(p);
-        p=new PersonData(5,2,"贾赦",R.drawable.picture,true,34);
+        p=new PersonData(5,2,"贾赦",R.drawable.picture_f,true,34);
         mPersonDatas.add(p);
-        p=new PersonData(6,3,"贾宝玉",R.drawable.picture,true,43);
+        p=new PersonData(6,3,"贾宝玉",R.drawable.picture_g,true,43);
         mPersonDatas.add(p);
-        p=new PersonData(7,3,"贾元春",R.drawable.picture,true,23);
+        p=new PersonData(7,3,"贾元春",R.drawable.picture_h,true,23);
         mPersonDatas.add(p);
-        p=new PersonData(8,3,"贾珠",R.drawable.picture,true,54);
+        p=new PersonData(8,3,"贾珠",R.drawable.picture_i,true,54);
         mPersonDatas.add(p);
-        p=new PersonData(9,4,"林黛玉",R.drawable.picture,true,23);
+        p=new PersonData(9,4,"林黛玉",R.drawable.picture_j,true,23);
         mPersonDatas.add(p);
-        p=new PersonData(10,5,"贾迎春",R.drawable.picture,true,19);
-        mPersonDatas.add(p);
-        newId=11;
+        newId=10;
         //todo get from database
     }
 
